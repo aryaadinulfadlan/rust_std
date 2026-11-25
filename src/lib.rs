@@ -799,4 +799,37 @@ mod tests {
         assert_eq!(10_i8.checked_isqrt(), Some(3));
         assert_eq!((-9_i8).checked_isqrt(), None);
     }
+    // LOGARITHM OPERATIONS
+    #[test]
+    fn ilog() {
+        assert_eq!(2_i8.ilog(2), 1);
+        // let _ = (-2_i8).ilog(2); //panic
+        // let _ = 2_i8.ilog(1); //panic
+    }
+    #[test]
+    fn checked_ilog() {
+        assert_eq!(2_i8.checked_ilog(2), Some(1));
+        assert_eq!((-2_i8).checked_ilog(2), None);
+        assert_eq!(2_i8.checked_ilog(1), None);
+    }
+    #[test]
+    fn ilog2() {
+        assert_eq!(2_i8.ilog2(), 1);
+        // let _ = (-2_i8).ilog2(); //panic
+    }
+    #[test]
+    fn checked_ilog2() {
+        assert_eq!(2_i8.checked_ilog2(), Some(1));
+        assert_eq!((-2_i8).checked_ilog2(), None);
+    }
+    #[test]
+    fn ilog10() {
+        assert_eq!(10_i8.ilog10(), 1);
+        // let _ = (-10_i8).ilog10(); //panic
+    }
+    #[test]
+    fn checked_ilog10() {
+        assert_eq!(10_i8.checked_ilog10(), Some(1));
+        assert_eq!((-10_i8).checked_ilog10(), None);
+    }
 }
