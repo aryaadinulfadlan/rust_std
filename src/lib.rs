@@ -786,4 +786,17 @@ mod tests {
         assert_eq!(2_i8.wrapping_pow(0), 1);
         assert_eq!(3_i8.wrapping_pow(5), -13); //243 | 116 | -13
     }
+    // SQUARE ROOT OPERATIONS
+    #[test]
+    fn isqrt() {
+        assert_eq!(9_i8.isqrt(), 3);
+        assert_eq!(10_i8.isqrt(), 3);
+        // let _ = (-9_i8).isqrt(); //panic
+    }
+    #[test]
+    fn checked_isqrt() {
+        assert_eq!(9_i8.checked_isqrt(), Some(3));
+        assert_eq!(10_i8.checked_isqrt(), Some(3));
+        assert_eq!((-9_i8).checked_isqrt(), None);
+    }
 }
