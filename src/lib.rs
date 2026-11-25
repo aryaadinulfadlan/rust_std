@@ -321,4 +321,101 @@ mod tests {
         assert_eq!(u8::MAX.wrapping_add_signed(3_i8), 2); //3 | 0, 1, 2
         assert_eq!(u8::MIN.wrapping_add_signed(-3_i8), 253); //3 | 255, 254, 253
     }
+    // SUBTRACTION OPERATIONS
+    #[test]
+    fn checked_sub() {
+        assert_eq!(120_i8.checked_sub(5), Some(115));
+        assert_eq!(i8::MAX.checked_sub(-1), None);
+        assert_eq!(i8::MIN.checked_sub(1), None);
+    }
+    #[test]
+    fn checked_sub_unsigned() {
+        assert_eq!(120_i8.checked_sub_unsigned(5_u8), Some(115));
+        assert_eq!(i8::MIN.checked_sub_unsigned(1_u8), None);
+    }
+    #[test]
+    fn checked_sub_signed() {
+        assert_eq!(120_u8.checked_sub_signed(-5_i8), Some(125));
+        assert_eq!(120_u8.checked_sub_signed(5_i8), Some(115));
+        assert_eq!(u8::MAX.checked_sub_signed(-1_i8), None);
+        assert_eq!(u8::MIN.checked_sub_signed(1_i8), None);
+    }
+    #[test]
+    fn checked_signed_diff() {
+        assert_eq!(130_u8.checked_signed_diff(3_u8), Some(127));
+        assert_eq!(3_u8.checked_signed_diff(130_u8), Some(-127));
+        assert_eq!(130_u8.checked_signed_diff(2_u8), None);
+    }
+    #[test]
+    fn overflowing_sub() {
+        assert_eq!(120_i8.overflowing_sub(5), (115, false));
+        assert_eq!(i8::MAX.overflowing_sub(-3), (-126, true)); //3 | -128, -127, -126
+        assert_eq!(i8::MIN.overflowing_sub(3), (125, true)); //3 | 127, 126, 125
+    }
+    #[test]
+    fn overflowing_sub_unsigned() {
+        assert_eq!(120_i8.overflowing_sub_unsigned(5_u8), (115, false));
+        assert_eq!(i8::MIN.overflowing_sub_unsigned(3_u8), (125, true)); //3 | 127, 126, 125
+    }
+    #[test]
+    fn overflowing_sub_signed() {
+        assert_eq!(120_u8.overflowing_sub_signed(-5_i8), (125, false));
+        assert_eq!(120_u8.overflowing_sub_signed(5_i8), (115, false));
+        assert_eq!(u8::MAX.overflowing_sub_signed(-3_i8), (2, true)); //3 | 0, 1, 2
+        assert_eq!(u8::MIN.overflowing_sub_signed(3_i8), (253, true)); //3 | 255, 254, 253
+    }
+    #[test]
+    fn saturating_sub() {
+        assert_eq!(120_i8.saturating_sub(5), 115);
+        assert_eq!(i8::MAX.saturating_sub(-1), i8::MAX);
+        assert_eq!(i8::MIN.saturating_sub(1), i8::MIN);
+    }
+    #[test]
+    fn saturating_sub_unsigned() {
+        assert_eq!(120_i8.saturating_sub_unsigned(5_u8), 115);
+        assert_eq!(i8::MIN.saturating_sub_unsigned(1_u8), i8::MIN);
+    }
+    #[test]
+    fn saturating_sub_signed() {
+        assert_eq!(120_u8.saturating_sub_signed(-5_i8), 125);
+        assert_eq!(120_u8.saturating_sub_signed(5_i8), 115);
+        assert_eq!(u8::MAX.saturating_sub_signed(-1_i8), u8::MAX);
+        assert_eq!(u8::MIN.saturating_sub_signed(1_i8), u8::MIN);
+    }
+    #[test]
+    fn strict_sub() {
+        assert_eq!(120_i8.strict_sub(5), 115);
+        // let _ = i8::MAX.strict_sub(-1); //panic
+        // let _ = i8::MIN.strict_sub(1); //panic
+    }
+    #[test]
+    fn strict_sub_unsigned() {
+        assert_eq!(120_i8.strict_sub_unsigned(5_u8), 115);
+        // let _ = i8::MIN.strict_sub_unsigned(1); //panic
+    }
+    #[test]
+    fn strict_sub_signed() {
+        assert_eq!(120_u8.strict_sub_signed(-5_i8), 125);
+        assert_eq!(120_u8.strict_sub_signed(5_i8), 115);
+        // let _ = u8::MAX.strict_sub_signed(-1); //panic
+        // let _ = u8::MIN.strict_sub_signed(1); //panic
+    }
+    #[test]
+    fn wrapping_sub() {
+        assert_eq!(120_i8.wrapping_sub(5), 115);
+        assert_eq!(i8::MAX.wrapping_sub(-3), -126); //3 | -128, -127, -126
+        assert_eq!(i8::MIN.wrapping_sub(3), 125); //3 | 127, 126, 125
+    }
+    #[test]
+    fn wrapping_sub_unsigned() {
+        assert_eq!(120_i8.wrapping_sub_unsigned(5_u8), 115);
+        assert_eq!(i8::MIN.wrapping_sub_unsigned(3_u8), 125); //3 | 127, 126, 125
+    }
+    #[test]
+    fn wrapping_sub_signed() {
+        assert_eq!(120_u8.wrapping_sub_signed(-5_i8), 125);
+        assert_eq!(120_u8.wrapping_sub_signed(5_i8), 115);
+        assert_eq!(u8::MAX.wrapping_sub_signed(-3_i8), 2); //3 | 0, 1, 2
+        assert_eq!(u8::MIN.wrapping_sub_signed(3_i8), 253); //3 | 255, 254, 253
+    }
 }
