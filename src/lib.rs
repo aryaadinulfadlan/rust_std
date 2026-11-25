@@ -1,5 +1,7 @@
 #[cfg(test)]
 mod tests {
+    use std::any::type_name_of_val;
+
     #[test]
     fn associated_constants() {
         assert_eq!(i8::BITS, 8);
@@ -831,5 +833,50 @@ mod tests {
     fn checked_ilog10() {
         assert_eq!(10_i8.checked_ilog10(), Some(1));
         assert_eq!((-10_i8).checked_ilog10(), None);
+    }
+    // OTHER INTEGER OPERATIONS
+    #[test]
+    fn is_positive() {
+        assert_eq!(5_i8.is_positive(), true);
+        assert_eq!((-5_i8).is_positive(), false);
+        assert_eq!(0_i8.is_positive(), false);
+    }
+    #[test]
+    fn is_negative() {
+        assert_eq!((-5_i8).is_negative(), true);
+        assert_eq!(5_i8.is_negative(), false);
+        assert_eq!(0_i8.is_negative(), false);
+    }
+    #[test]
+    fn midpoint() {
+        assert_eq!(1_u8.midpoint(5), 3); //1 + 5 = 6 | 6 / 2 = 3
+        assert_eq!((-7_i8).midpoint(0), -3); //-7 + 0 = -7 | -7 / 2 = -3.5
+    }
+    #[test]
+    fn signum() {
+        assert_eq!(0_i8.signum(), 0);
+        assert_eq!(2_i8.signum(), 1);
+        assert_eq!((-2_i8).signum(), -1);
+    }
+    #[test]
+    fn cast_unsigned() {
+        let x = 5_i8;
+        let x_casted = x.cast_unsigned();
+        assert_eq!(type_name_of_val(&x_casted), "u8");
+    }
+    #[test]
+    fn cast_signed() {
+        let x = 5_u8;
+        let x_casted = x.cast_signed();
+        assert_eq!(type_name_of_val(&x_casted), "i8");
+    }
+    #[test]
+    fn from_str_radix() {
+        assert_eq!(u8::from_str_radix("100", 2), Ok(4));
+        assert_eq!(u8::from_str_radix("100", 8), Ok(64));
+        assert_eq!(u8::from_str_radix("100", 10), Ok(100));
+        assert_eq!(u8::from_str_radix("A", 16), Ok(10));
+        assert_eq!(u8::from_str_radix("A", 10).is_err(), true);
+        // let _ = u8::from_str_radix("A", 37); //panic
     }
 }
