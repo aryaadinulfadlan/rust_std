@@ -469,4 +469,92 @@ mod tests {
         assert_eq!(7_u8.checked_next_multiple_of(0), None);
         assert_eq!(u8::MAX.checked_next_multiple_of(2), None); //255 | 256
     }
+    // DIVISION OPERATIONS
+    #[test]
+    fn div_ceil() {
+        assert_eq!(7_u8.div_ceil(4), 2);
+        // let _ = 7_u8.div_ceil(0); //panic
+    }
+    #[test]
+    fn div_euclid() {
+        //if rhs is positive: floor
+        //if rhs is negative: ceil
+        assert_eq!(7_i8.div_euclid(4), 1);
+        assert_eq!(7_i8.div_euclid(-4), -1);
+        assert_eq!((-7_i8).div_euclid(4), -2);
+        assert_eq!((-7_i8).div_euclid(-4), 2);
+        // let _ = i8::MIN.div_euclid(-1); //panic
+        // let _ = i8::MIN.div_euclid(0); //panic
+    }
+    #[test]
+    fn checked_div() {
+        assert_eq!((-7_i8).checked_div(4), Some(-1));
+        assert_eq!((-7_i8).checked_div(-4), Some(1));
+        assert_eq!(i8::MIN.checked_div(-1), None);
+        assert_eq!(i8::MIN.checked_div(0), None);
+    }
+    #[test]
+    fn checked_div_euclid() {
+        //if rhs is positive: floor
+        //if rhs is negative: ceil
+        assert_eq!((-7_i8).checked_div_euclid(4), Some(-2));
+        assert_eq!((-7_i8).checked_div_euclid(-4), Some(2));
+        assert_eq!(i8::MIN.checked_div_euclid(-1), None);
+        assert_eq!(i8::MIN.checked_div_euclid(0), None);
+    }
+    #[test]
+    fn overflowing_div() {
+        assert_eq!((-7_i8).overflowing_div(4), (-1, false));
+        assert_eq!((-7_i8).overflowing_div(-4), (1, false));
+        assert_eq!(i8::MIN.overflowing_div(-1), (i8::MIN, true));
+        // let _ = i8::MIN.overflowing_div(0); //panic
+    }
+    #[test]
+    fn overflowing_div_euclid() {
+        //if rhs is positive: floor
+        //if rhs is negative: ceil
+        assert_eq!((-7_i8).overflowing_div_euclid(4), (-2, false));
+        assert_eq!((-7_i8).overflowing_div_euclid(-4), (2, false));
+        assert_eq!(i8::MIN.overflowing_div_euclid(-1), (i8::MIN, true));
+        // let _ = i8::MIN.overflowing_div_euclid(0); //panic
+    }
+    #[test]
+    fn saturating_div() {
+        assert_eq!((-7_i8).saturating_div(4), -1);
+        assert_eq!((-7_i8).saturating_div(-4), 1);
+        assert_eq!(i8::MIN.saturating_div(-1), i8::MAX);
+        // let _ = i8::MIN.saturating_div(0); //panic
+    }
+    #[test]
+    fn strict_div() {
+        assert_eq!((-7_i8).strict_div(4), -1);
+        assert_eq!((-7_i8).strict_div(-4), 1);
+        // let _ = i8::MIN.strict_div(-1); //panic
+        // let _ = i8::MIN.strict_div(0); //panic
+    }
+    #[test]
+    fn strict_div_euclid() {
+        //if rhs is positive: floor
+        //if rhs is negative: ceil
+        assert_eq!((-7_i8).strict_div_euclid(4), -2);
+        assert_eq!((-7_i8).strict_div_euclid(-4), 2);
+        // let _ = i8::MIN.strict_div_euclid(-1); //panic
+        // let _ = i8::MIN.strict_div_euclid(0); //panic
+    }
+    #[test]
+    fn wrapping_div() {
+        assert_eq!((-7_i8).wrapping_div(4), -1);
+        assert_eq!((-7_i8).wrapping_div(-4), 1);
+        assert_eq!(i8::MIN.wrapping_div(-1), i8::MIN);
+        // let _ = i8::MIN.wrapping_div(0); //panic
+    }
+    #[test]
+    fn wrapping_div_euclid() {
+        //if rhs is positive: floor
+        //if rhs is negative: ceil
+        assert_eq!((-7_i8).wrapping_div_euclid(4), -2);
+        assert_eq!((-7_i8).wrapping_div_euclid(-4), 2);
+        assert_eq!(i8::MIN.wrapping_div_euclid(-1), i8::MIN);
+        // let _ = i8::MIN.wrapping_div_euclid(0); //panic
+    }
 }
