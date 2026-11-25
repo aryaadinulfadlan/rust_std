@@ -418,4 +418,55 @@ mod tests {
         assert_eq!(u8::MAX.wrapping_sub_signed(-3_i8), 2); //3 | 0, 1, 2
         assert_eq!(u8::MIN.wrapping_sub_signed(3_i8), 253); //3 | 255, 254, 253
     }
+    // MULTIPLICATION OPERATIONS
+    #[test]
+    fn checked_mul() {
+        assert_eq!(65_i8.checked_mul(1), Some(65));
+        assert_eq!(65_i8.checked_mul(2), None);
+        assert_eq!((-65_i8).checked_mul(2), None);
+    }
+    #[test]
+    fn overflowing_mul() {
+        assert_eq!(65_i8.overflowing_mul(1), (65, false));
+        assert_eq!(65_i8.overflowing_mul(2), (-126, true)); //130 | 3 | -128, -127, -126
+        assert_eq!((-65_i8).overflowing_mul(2), (126, true)); //-130 | 2 | 127, 126
+    }
+    #[test]
+    fn saturating_mul() {
+        assert_eq!(65_i8.saturating_mul(1), 65);
+        assert_eq!(65_i8.saturating_mul(2), i8::MAX);
+        assert_eq!((-65_i8).saturating_mul(2), i8::MIN);
+    }
+    #[test]
+    fn strict_mul() {
+        assert_eq!(65_i8.strict_mul(1), 65);
+        // let _ = 65_i8.strict_mul(2); //panic
+        // let _ = (-65_i8).strict_mul(2); //panic
+    }
+    #[test]
+    fn wrapping_mul() {
+        assert_eq!(65_i8.wrapping_mul(1), 65);
+        assert_eq!(65_i8.wrapping_mul(2), -126); //130 | 3 | -128, -127, -126
+        assert_eq!((-65_i8).wrapping_mul(2), 126); //-130 | 2 | 127, 126
+    }
+    #[test]
+    fn is_multiple_of() {
+        assert_eq!(6_u8.is_multiple_of(3), true);
+        assert_eq!(6_u8.is_multiple_of(4), false);
+    }
+    #[test]
+    fn next_multiple_of() {
+        assert_eq!(6_u8.next_multiple_of(3), 6);
+        assert_eq!(5_u8.next_multiple_of(3), 6);
+        assert_eq!(7_u8.next_multiple_of(3), 9);
+        // let _ = 7_u8.next_multiple_of(0); //panic
+    }
+    #[test]
+    fn checked_next_multiple_of() {
+        assert_eq!(6_u8.checked_next_multiple_of(3), Some(6));
+        assert_eq!(5_u8.checked_next_multiple_of(3), Some(6));
+        assert_eq!(7_u8.checked_next_multiple_of(3), Some(9));
+        assert_eq!(7_u8.checked_next_multiple_of(0), None);
+        assert_eq!(u8::MAX.checked_next_multiple_of(2), None); //255 | 256
+    }
 }
