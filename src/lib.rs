@@ -677,4 +677,55 @@ mod tests {
         assert_eq!(2_u8.wrapping_neg(), 254); //2 | 255, 254
         assert_eq!(u8::MIN.wrapping_neg(), u8::MIN);
     }
+    // ABSOLUTE VALUE OPERATIONS
+    #[test]
+    fn abs() {
+        assert_eq!(7_i8.abs(), 7);
+        assert_eq!((-7_i8).abs(), 7);
+        // let _ = i8::MIN.abs(); //panic
+    }
+    #[test]
+    fn unsigned_abs() {
+        assert_eq!(7_i8.unsigned_abs(), 7);
+        assert_eq!((-7_i8).unsigned_abs(), 7);
+        assert_eq!(i8::MIN.unsigned_abs(), 128); //-128 128
+    }
+    #[test]
+    fn abs_diff() {
+        assert_eq!(7_i8.abs_diff(4), 3);
+        assert_eq!(7_i8.abs_diff(-4), 11);
+        assert_eq!((-7_i8).abs_diff(4), 11);
+        assert_eq!((-7_i8).abs_diff(-4), 3);
+        assert_eq!(i8::MIN.abs_diff(i8::MAX), u8::MAX); //-128 127
+    }
+    #[test]
+    fn checked_abs() {
+        assert_eq!(7_i8.checked_abs(), Some(7));
+        assert_eq!((-7_i8).checked_abs(), Some(7));
+        assert_eq!(i8::MIN.checked_abs(), None); //-128 128
+    }
+    #[test]
+    fn overflowing_abs() {
+        assert_eq!(7_i8.overflowing_abs(), (7, false));
+        assert_eq!((-7_i8).overflowing_abs(), (7, false));
+        assert_eq!(i8::MIN.overflowing_abs(), (i8::MIN, true)); //-128 128
+    }
+    #[test]
+    fn saturating_abs() {
+        assert_eq!(7_i8.saturating_abs(), 7);
+        assert_eq!((-7_i8).saturating_abs(), 7);
+        assert_eq!(i8::MIN.saturating_abs(), i8::MAX); //-128 128
+    }
+    #[test]
+    fn strict_abs() {
+        assert_eq!(7_i8.strict_abs(), 7);
+        assert_eq!((-7_i8).strict_abs(), 7);
+        // let _ = i8::MIN.strict_abs(); //panic
+    }
+    #[test]
+    fn wrapping_abs() {
+        assert_eq!(7_i8.wrapping_abs(), 7);
+        assert_eq!((-7_i8).wrapping_abs(), 7);
+        assert_eq!(i8::MIN.wrapping_abs(), i8::MIN); //-128 128
+    }
 }
