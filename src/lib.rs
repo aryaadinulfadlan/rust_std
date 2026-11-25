@@ -728,4 +728,62 @@ mod tests {
         assert_eq!((-7_i8).wrapping_abs(), 7);
         assert_eq!(i8::MIN.wrapping_abs(), i8::MIN); //-128 128
     }
+    // EXPONENTIATION
+    #[test]
+    fn pow() {
+        assert_eq!(2_i8.pow(4), 16);
+        assert_eq!(2_i8.pow(0), 1);
+        // let _ = 3_i8.pow(5); //panic
+    }
+    #[test]
+    fn is_power_of_two() {
+        assert_eq!(1_u8.is_power_of_two(), true);
+        assert_eq!(2_u8.is_power_of_two(), true);
+        assert_eq!(6_u8.is_power_of_two(), false);
+    }
+    #[test]
+    fn next_power_of_two() {
+        assert_eq!(4_u8.next_power_of_two(), 4);
+        assert_eq!(3_u8.next_power_of_two(), 4);
+        assert_eq!(5_u8.next_power_of_two(), 8);
+        // let _ = 129_u8.next_power_of_two(); //panic
+    }
+    #[test]
+    fn checked_next_power_of_two() {
+        assert_eq!(4_u8.checked_next_power_of_two(), Some(4));
+        assert_eq!(3_u8.checked_next_power_of_two(), Some(4));
+        assert_eq!(5_u8.checked_next_power_of_two(), Some(8));
+        assert_eq!(129_u8.checked_next_power_of_two(), None); //256
+    }
+    #[test]
+    fn checked_pow() {
+        assert_eq!(2_i8.checked_pow(4), Some(16));
+        assert_eq!(2_i8.checked_pow(0), Some(1));
+        assert_eq!(3_i8.checked_pow(5), None); //243
+    }
+    #[test]
+    fn overflowing_pow() {
+        assert_eq!(2_i8.overflowing_pow(4), (16, false));
+        assert_eq!(2_i8.overflowing_pow(0), (1, false));
+        assert_eq!(3_i8.overflowing_pow(5), (-13, true)); //243 | 116 | -13
+    }
+    #[test]
+    fn saturating_pow() {
+        assert_eq!(2_i8.saturating_pow(4), 16);
+        assert_eq!(2_i8.saturating_pow(0), 1);
+        assert_eq!(3_i8.saturating_pow(5), i8::MAX); //243
+        assert_eq!((-3_i8).saturating_pow(5), i8::MIN); //-243
+    }
+    #[test]
+    fn strict_pow() {
+        assert_eq!(2_i8.strict_pow(4), 16);
+        assert_eq!(2_i8.strict_pow(0), 1);
+        // let _ = 3_i8.strict_pow(5); //panic
+    }
+    #[test]
+    fn wrapping_pow() {
+        assert_eq!(2_i8.wrapping_pow(4), 16);
+        assert_eq!(2_i8.wrapping_pow(0), 1);
+        assert_eq!(3_i8.wrapping_pow(5), -13); //243 | 116 | -13
+    }
 }
