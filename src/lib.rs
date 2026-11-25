@@ -230,4 +230,95 @@ mod tests {
         });
         assert_eq!(x, 0x01020304_u32);
     }
+    // ADDITION OPERATIONS
+    #[test]
+    fn checked_add() {
+        assert_eq!(120_i8.checked_add(7), Some(i8::MAX));
+        assert_eq!(120_i8.checked_add(8), None);
+        assert_eq!(i8::MIN.checked_add(-1), None);
+    }
+    #[test]
+    fn checked_add_unsigned() {
+        assert_eq!(120_i8.checked_add_unsigned(7_u8), Some(i8::MAX));
+        assert_eq!(120_i8.checked_add_unsigned(8_u8), None);
+    }
+    #[test]
+    fn checked_add_signed() {
+        assert_eq!(120_u8.checked_add_signed(-7_i8), Some(113));
+        assert_eq!(120_u8.checked_add_signed(8_i8), Some(128));
+        assert_eq!(u8::MAX.checked_add_signed(1_i8), None);
+        assert_eq!(u8::MIN.checked_add_signed(-1_i8), None);
+    }
+    #[test]
+    fn overflowing_add() {
+        assert_eq!(120_i8.overflowing_add(7), (i8::MAX, false));
+        assert_eq!(i8::MAX.overflowing_add(3), (-126, true)); //3 | -128, -127, -126
+        assert_eq!(i8::MIN.overflowing_add(-3), (125, true)); //3 | 127, 126, 125
+    }
+    #[test]
+    fn overflowing_add_unsigned() {
+        assert_eq!(120_i8.overflowing_add_unsigned(7_u8), (i8::MAX, false));
+        assert_eq!(i8::MAX.overflowing_add_unsigned(3_u8), (-126, true)); //3 | -128, -127, -126
+    }
+    #[test]
+    fn overflowing_add_signed() {
+        assert_eq!(120_u8.overflowing_add_signed(-7_i8), (113, false));
+        assert_eq!(120_u8.overflowing_add_signed(8_i8), (128, false));
+        assert_eq!(u8::MAX.overflowing_add_signed(3_i8), (2, true)); //3 | 0, 1, 2
+        assert_eq!(u8::MIN.overflowing_add_signed(-3_i8), (253, true)); //3 | 255, 254, 253
+    }
+    #[test]
+    fn saturating_add() {
+        assert_eq!(120_i8.saturating_add(7), i8::MAX);
+        assert_eq!(120_i8.saturating_add(8), i8::MAX);
+        assert_eq!(i8::MIN.saturating_add(-1), i8::MIN);
+    }
+    #[test]
+    fn saturating_add_unsigned() {
+        assert_eq!(120_i8.saturating_add_unsigned(7_u8), i8::MAX);
+        assert_eq!(120_i8.saturating_add_unsigned(8_u8), i8::MAX);
+    }
+    #[test]
+    fn saturating_add_signed() {
+        assert_eq!(120_u8.saturating_add_signed(-7_i8), 113);
+        assert_eq!(120_u8.saturating_add_signed(8_i8), 128);
+        assert_eq!(u8::MAX.saturating_add_signed(1_i8), u8::MAX);
+        assert_eq!(u8::MIN.saturating_add_signed(-1_i8), u8::MIN);
+    }
+    #[test]
+    fn strict_add() {
+        assert_eq!(120_i8.strict_add(7), i8::MAX);
+        // let _ = 120_i8.strict_add(8); //panic
+        // let _ = i8::MIN.strict_add(-1); //panic
+    }
+    #[test]
+    fn strict_add_unsigned() {
+        assert_eq!(120_i8.strict_add_unsigned(7_u8), i8::MAX);
+        // let _ = 120_i8.strict_add_unsigned(8_u8); //panic
+    }
+    #[test]
+    fn strict_add_signed() {
+        assert_eq!(120_u8.strict_add_signed(-7_i8), 113);
+        assert_eq!(120_u8.strict_add_signed(8_i8), 128);
+        // let _ = u8::MAX.strict_add_signed(1_i8); //panic
+        // let _ = u8::MIN.strict_add_signed(-1_i8); //panic
+    }
+    #[test]
+    fn wrapping_add() {
+        assert_eq!(120_i8.wrapping_add(7), i8::MAX);
+        assert_eq!(i8::MAX.wrapping_add(3), -126); //3 | -128, -127, -126
+        assert_eq!(i8::MIN.wrapping_add(-3), 125); //3 | 127, 126, 125
+    }
+    #[test]
+    fn wrapping_add_unsigned() {
+        assert_eq!(120_i8.wrapping_add_unsigned(7_u8), i8::MAX);
+        assert_eq!(i8::MAX.wrapping_add_unsigned(3_u8), -126); //3 | -128, -127, -126
+    }
+    #[test]
+    fn wrapping_add_signed() {
+        assert_eq!(120_u8.wrapping_add_signed(-7_i8), 113);
+        assert_eq!(120_u8.wrapping_add_signed(8_i8), 128);
+        assert_eq!(u8::MAX.wrapping_add_signed(3_i8), 2); //3 | 0, 1, 2
+        assert_eq!(u8::MIN.wrapping_add_signed(-3_i8), 253); //3 | 255, 254, 253
+    }
 }
