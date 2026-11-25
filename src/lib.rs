@@ -1,14 +1,11 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn associated_constants() {
+        assert_eq!(i8::BITS, 8);
+        assert_eq!(i8::MIN, -128);
+        assert_eq!(u8::MIN, 0);
+        assert_eq!(i8::MAX, 127);
+        assert_eq!(u8::MAX, 255);
     }
 }
