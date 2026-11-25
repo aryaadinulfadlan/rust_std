@@ -638,4 +638,43 @@ mod tests {
         assert_eq!(i8::MIN.wrapping_rem_euclid(-1), 0); //128
         // let _ = i8::MIN.wrapping_rem_euclid(0); //panic
     }
+    // NEGATION OPERATIONS
+    #[test]
+    fn checked_neg() {
+        assert_eq!(2_i8.checked_neg(), Some(-2));
+        assert_eq!((-2_i8).checked_neg(), Some(2));
+        assert_eq!(i8::MIN.checked_neg(), None);
+        assert_eq!(2_u8.checked_neg(), None);
+        assert_eq!(u8::MIN.checked_neg(), Some(u8::MIN));
+    }
+    #[test]
+    fn overflowing_neg() {
+        assert_eq!(2_i8.overflowing_neg(), (-2, false));
+        assert_eq!((-2_i8).overflowing_neg(), (2, false));
+        assert_eq!(i8::MIN.overflowing_neg(), (i8::MIN, true));
+        assert_eq!(2_u8.overflowing_neg(), (254, true)); //2 | 255, 254
+        assert_eq!(u8::MIN.overflowing_neg(), (u8::MIN, false));
+    }
+    #[test]
+    fn saturating_neg() {
+        assert_eq!(2_i8.saturating_neg(), -2);
+        assert_eq!((-2_i8).saturating_neg(), 2);
+        assert_eq!(i8::MIN.saturating_neg(), i8::MAX);
+    }
+    #[test]
+    fn strict_neg() {
+        assert_eq!(2_i8.strict_neg(), -2);
+        assert_eq!((-2_i8).strict_neg(), 2);
+        // let _ = i8::MIN.strict_neg(); //panic
+        // let _ = 2_u8.strict_neg(); //panic
+        assert_eq!(u8::MIN.strict_neg(), u8::MIN);
+    }
+    #[test]
+    fn wrapping_neg() {
+        assert_eq!(2_i8.wrapping_neg(), -2);
+        assert_eq!((-2_i8).wrapping_neg(), 2);
+        assert_eq!(i8::MIN.wrapping_neg(), i8::MIN);
+        assert_eq!(2_u8.wrapping_neg(), 254); //2 | 255, 254
+        assert_eq!(u8::MIN.wrapping_neg(), u8::MIN);
+    }
 }
