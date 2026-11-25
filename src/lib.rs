@@ -557,4 +557,85 @@ mod tests {
         assert_eq!(i8::MIN.wrapping_div_euclid(-1), i8::MIN);
         // let _ = i8::MIN.wrapping_div_euclid(0); //panic
     }
+    // REMAINDER OPERATIONS
+    #[test]
+    fn rem_euclid() {
+        // if rhs is positive: floor
+        // if rhs is negative: ceil
+        // r = self - (n * rhs)
+        assert_eq!(7_i8.rem_euclid(4), 3); //1 | r = 7 - (1 * 4)
+        assert_eq!(7_i8.rem_euclid(-4), 3); //-1 | r = 7 - (-1 * -4)
+        assert_eq!((-7_i8).rem_euclid(4), 1); //-2 | r = -7 - (-2 * 4)
+        assert_eq!((-7_i8).rem_euclid(-4), 1); //2 | r = -7 - (2 * -4)
+        // let _ = i8::MIN.rem_euclid(-1); //panic
+        // let _ = i8::MIN.rem_euclid(0); //panic
+    }
+    #[test]
+    fn checked_rem() {
+        assert_eq!(7_i8.checked_rem(4), Some(3));
+        assert_eq!((-7_i8).checked_rem(4), Some(-3));
+        assert_eq!(i8::MIN.checked_rem(-1), None); //128
+        assert_eq!(i8::MIN.checked_rem(0), None);
+    }
+    #[test]
+    fn checked_rem_euclid() {
+        // if rhs is positive: floor
+        // if rhs is negative: ceil
+        // r = self - (n * rhs)
+        assert_eq!(7_i8.checked_rem_euclid(4), Some(3)); //1 | r = 7 - (1 * 4)
+        assert_eq!((-7_i8).checked_rem_euclid(4), Some(1)); //-2 | r = -7 - (-2 * 4)
+        assert_eq!(i8::MIN.checked_rem_euclid(-1), None); //128
+        assert_eq!(i8::MIN.checked_rem_euclid(0), None);
+    }
+    #[test]
+    fn overflowing_rem() {
+        assert_eq!(7_i8.overflowing_rem(4), (3, false));
+        assert_eq!((-7_i8).overflowing_rem(4), (-3, false));
+        assert_eq!(i8::MIN.overflowing_rem(-1), (0, true)); //128
+        // let _ = i8::MIN.overflowing_rem(0); //panic
+    }
+    #[test]
+    fn overflowing_rem_euclid() {
+        // if rhs is positive: floor
+        // if rhs is negative: ceil
+        // r = self - (n * rhs)
+        assert_eq!(7_i8.overflowing_rem_euclid(4), (3, false)); //1 | r = 7 - (1 * 4)
+        assert_eq!((-7_i8).overflowing_rem_euclid(4), (1, false)); //-2 | r = -7 - (-2 * 4)
+        assert_eq!(i8::MIN.overflowing_rem_euclid(-1), (0, true)); //128
+        // let _ = i8::MIN.overflowing_rem_euclid(0); //panic
+    }
+    #[test]
+    fn strict_rem() {
+        assert_eq!(7_i8.strict_rem(4), 3);
+        assert_eq!((-7_i8).strict_rem(4), -3);
+        // let _ = i8::MIN.strict_rem(-1); //panic
+        // let _ = i8::MIN.strict_rem(0); //panic
+    }
+    #[test]
+    fn strict_rem_euclid() {
+        // if rhs is positive: floor
+        // if rhs is negative: ceil
+        // r = self - (n * rhs)
+        assert_eq!(7_i8.strict_rem_euclid(4), 3); //1 | r = 7 - (1 * 4)
+        assert_eq!((-7_i8).strict_rem_euclid(4), 1); //-2 | r = -7 - (-2 * 4)
+        // let _ = i8::MIN.strict_rem_euclid(-1); //panic
+        // let _ = i8::MIN.strict_rem_euclid(0); //panic
+    }
+    #[test]
+    fn wrapping_rem() {
+        assert_eq!(7_i8.wrapping_rem(4), 3);
+        assert_eq!((-7_i8).wrapping_rem(4), -3);
+        assert_eq!(i8::MIN.wrapping_rem(-1), 0); //128
+        // let _ = i8::MIN.wrapping_rem(0); //panic
+    }
+    #[test]
+    fn wrapping_rem_euclid() {
+        // if rhs is positive: floor
+        // if rhs is negative: ceil
+        // r = self - (n * rhs)
+        assert_eq!(7_i8.wrapping_rem_euclid(4), 3); //1 | r = 7 - (1 * 4)
+        assert_eq!((-7_i8).wrapping_rem_euclid(4), 1); //-2 | r = -7 - (-2 * 4)
+        assert_eq!(i8::MIN.wrapping_rem_euclid(-1), 0); //128
+        // let _ = i8::MIN.wrapping_rem_euclid(0); //panic
+    }
 }
